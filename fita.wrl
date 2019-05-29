@@ -1,0 +1,107 @@
+#VRML V2.0 utf8
+
+# This file was authored with Blender (http://www.blender.org/)
+# Blender version 249
+# Blender file fita.blend
+# Exported using VRML97 exporter v1.55 (2006/01/17)
+
+
+NavigationInfo {
+	headlight FALSE
+	visibilityLimit 100.0
+	type ["EXAMINE", "ANY"]
+	avatarSize [0.25, 1.75, 0.75]
+} 
+ 
+Background {
+	groundColor 0.0565629 0.2208154 0.4
+	skyColor 0.0565629 0.2208154 0.4
+}
+
+DEF OB_rsvd_Cylinder Transform {
+	translation 0.000000 0.000000 0.000000
+	rotation 1.000000 0.000000 0.000000 0.000000
+	scale 1.000000 1.000000 1.000000
+	children [
+		DEF ME_Cylinder_001 Group {
+			children [
+				Shape {
+					appearance Appearance {
+					}
+					geometry IndexedFaceSet {
+						solid TRUE
+						coord DEF coord_Cylinder_001 Coordinate {
+							point [
+0.707106769085 0.707106769085 -1.0
+ 1.0 -4.37113882867e-08 -1.0
+ 0.707106769085 -0.707106769085 -1.0
+ -8.74227765735e-08 -1.0 -1.0
+ -0.707106888294 -0.707106649876 -1.0
+ -1.0 1.19248806385e-08 -1.0
+ -0.707106888294 0.707106649876 -1.0
+ -3.01991605056e-07 1.0 -1.0
+ 0.707106471062 0.707107126713 1.0
+ 1.0 6.15908049895e-07 1.0
+ 0.707107007504 -0.707106590271 1.0
+ -2.3849761277e-08 -1.0 1.0
+ -0.707107007504 -0.707106530666 1.0
+ -1.0 6.63607579554e-07 1.0
+ -0.707106113434 0.707107484341 1.0
+ 1.30336547954e-06 1.0 1.0
+ 							]
+						}
+						
+						coordIndex [
+8 0 15 -1, 
+0 7 15 -1, 
+6 14 7 -1, 
+14 15 7 -1, 
+5 13 6 -1, 
+13 14 6 -1, 
+4 12 5 -1, 
+12 13 5 -1, 
+3 11 12 -1, 
+3 12 4 -1, 
+2 10 11 -1, 
+2 11 3 -1, 
+1 9 10 -1, 
+1 10 2 -1, 
+0 8 9 -1, 
+0 9 1 -1, 
+						]
+					}
+				}
+			]
+		}
+	]
+}
+DEF OB_Lamp Transform {
+	translation 4.076245 1.005454 5.903862
+	rotation 0.205942 0.331517 0.920698 1.926274
+	scale 1.000000 1.000000 1.000000
+	children [
+		DEF Lamp PointLight {
+			ambientIntensity 0.0
+			color 1.0 1.0 1.0
+			intensity 0.5714286
+			location 0.0 0.0 0.0
+			radius 29.9999828339
+		}
+		
+	]
+}
+DEF OB_Camera Transform {
+	translation 7.481132 -6.507640 5.343665
+	rotation 0.772239 0.341341 0.535848 1.347139
+	scale 1.000000 1.000000 1.000000
+	children [
+		DEF Camera Viewpoint {
+			description "Camera" 
+			position 0.0 0.0 0.0
+			orientation 1.0 0.0 0.0 -1.570796
+			fieldOfView 0.661
+		}
+		
+	]
+}
+

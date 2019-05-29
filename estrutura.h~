@@ -1,0 +1,27 @@
+#include <GL/glut.h>
+#ifndef _estrutura_h_
+#define _estrutura_h_
+
+typedef struct ponto{
+       struct ponto *prox;
+       float x;
+       float y;
+       float z;
+}tPonto, *tPtrPonto;
+
+typedef struct face{
+        struct face *prox;
+        tPonto *pt1;
+        tPonto *pt2;
+        tPonto *pt3;
+}tFace, *tPtrFace;
+
+extern int aux;
+extern void criaPonto(tPtrPonto *p);
+extern void criaFace(tPtrFace *f);
+extern int inserePonto(tPtrPonto *p,double x,double y,double z);
+extern void arquivo(tPtrPonto *p, tPtrFace *f,  char *arqNome);
+extern int insereFace(tPtrFace *f,tPtrPonto *p, int c1, int c2, int c3);
+extern void gera(tPtrFace f, float r, float g, float b);
+
+#endif

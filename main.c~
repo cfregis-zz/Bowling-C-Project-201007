@@ -1,0 +1,242 @@
+#include <GL/glut.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "estrutura.h"
+
+double transXR1=0, transYR1=0, transXR2=0, transYR2=0, transBolaX=0, transBolaY=0, dirBola=-1;
+double rot1, rot2;
+tPtrPonto pMesa, pPernas, pBola, pRaq1, pRaq2, pRede;
+tPtrFace fMesa, fPernas, fBola, fRaq1, fRaq2, fRede;
+
+void Desenha(){    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glDrawBuffer(GL_BACK);
+    glEnable(GL_DEPTH_TEST);
+    
+    glTranslated(0, 0, -12);
+    glRotated(90, 1, 0, 0);
+    glRotated(90, 0, 0, 1);
+    glRotated(12, 0, 1, 0);
+    
+    glBegin(GL_LINES);
+        glColor3d(0,0,1);
+        glVertex3d(0, 0, 0);
+        glVertex3d(0, 0, 6);
+        glColor3d(1,0,0);
+        glVertex3d(0, 0, 0);
+        glVertex3d(6, 0, 0);
+        glColor3d(0,1,0);
+        glVertex3d(0, 0, 0);
+        glVertex3d(0, 6, 0);        
+    glEnd();
+    
+    //Mesa
+    gera(fMesa, 0, 0.191, 0.255);
+    //Pernas da mesa
+    gera(fPernas, 0.139, 0.071, 0.038);
+    //Rede
+    gera(fRede, 0.0, 1.0, 0.0);
+    //Bola
+    glPushMatrix();
+    glTranslated(transBolaX, 0, 0);
+    gera(fBola, 0.8, 0.8, 0.8);
+    glPopMatrix();
+    //Raquete 1
+    glPushMatrix();
+    glRotated(rot1, 0, 0, 1);
+    glTranslated(1, -1, 0);
+    glTranslated(transXR2, transYR2, 0);
+    gera(fRaq1, 1.0, 1.0, 0.0);
+    glPopMatrix();
+    //Raquete 2
+    glPushMatrix();
+    glRotated(rot2, 0, 0, 1);
+    glTranslated(-9, 2, 0);
+    glTranslated(transXR1, transYR1, 0);
+    gera(fRaq2, 1.0, 0.0, 0.0);
+    glPopMatrix();
+    
+    glutSwapBuffers();
+}
+
+void Modelagem (void){
+    criaPonto(&pMesa);
+    criaFace(&fMesa);
+    arquivo(&pMesa, &fMesa, "mesa.wrl");
+    
+    criaPonto(&pPernas);
+    criaFace(&fPernas);
+    arquivo(&pPernas, &fPernas, "pernas.wrl");
+    
+    criaPonto(&pRede);
+    criaFace(&fRede);
+    arquivo(&pRede, &fRede, "rede.wrl");
+    
+    criaPonto(&pBola);
+    criaFace(&fBola);
+    arquivo(&pBola, &fBola, "bola.wrl");
+    
+    criaPonto(&pRaq1);
+    criaFace(&fRaq1);
+    arquivo(&pRaq1, &fRaq1, "raquete.wrl");
+    
+    criaPonto(&pRaq2);
+    criaFace(&fRaq2);
+    arquivo(&pRaq2, &fRaq2, "raquete.wrl");
+}
+
+void Inicializa(){
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(300, 1, 0.5, 400);
+    Modelagem();    
+}
+
+void Key(unsigned char key, int x, int y){
+    int aux = 0;
+    
+    switch(key){
+	case 'W':
+	case 'w': transXR1 -= 0.2;
+		  aux = 1;
+		  break;
+	
+	case 'A':
+	case 'a': transYR1 -= 0.2;
+		  aux = 1;
+		  break;
+	
+	case 'S':
+	case 's': transXR1 += 0.2;
+		  aux = 1;
+		  break;
+	  
+	case 'D':
+	case 'd': transYR1 += 0.2;
+		  aux = 1;
+		  break;
+		  
+	case 'F':
+	case 'f': rot2 += 3;
+		  aux = 1;
+		  break;
+		  
+	case 'g':
+	case 'G': rot2 += 3;
+		  aux = 1;
+		  break;
+
+	case ',':
+	case '<': rot1 -= 3;
+		  aux = 1;
+		  break;
+		  
+	case '.':
+	case '>': rot1 += 3;
+		  aux = 1;
+		  break;
+    }
+    if(transYR1 <= -4.6){
+	transYR1 += 0.2;
+	aux = 0;
+    }
+    if(transYR1 >= 1.6){
+	transYR1 -= 0.2;
+	aux = 0;
+    }
+    if(transXR1 <= -0.6){
+	transXR1 += 0.2;
+	aux = 0;
+    }
+    if(transXR1 >= 4.0){
+	transXR1 -= 0.2;
+	aux = 0;
+    }
+    if(rot1 < -9){
+	rot1 += 3;
+	aux = 0;
+    }
+    if(rot1 > 9){
+	rot1 -= 3;
+	aux = 0;
+    }
+    if(rot2 < -9){
+	rot2 += 3;
+	aux = 0;
+    }
+    if(rot2 > 9){
+	rot2 -= 3;
+	aux = 0;
+    }
+    if(aux)
+      glutPostRedisplay();
+}
+
+void Special(int key, int x, int y){
+    int aux = 0;
+    switch(key){
+	    case GLUT_KEY_UP: transXR2 -= 0.2;
+			      aux = 1;
+			      break;
+			      
+	    case GLUT_KEY_LEFT: transYR2 -= 0.2;
+				aux = 1;
+				break;
+				
+	    case GLUT_KEY_DOWN: transXR2 += 0.2;
+				aux = 1;
+				break;
+				
+	    case GLUT_KEY_RIGHT: transYR2 += 0.2;
+				aux = 1;
+				break;
+    }
+    if(transYR2 >= 4.4){
+	transYR2 -= 0.2;
+	aux = 0;
+    }
+    if(transYR2 <= -1.4){
+	transYR2 += 0.2;
+	aux = 0;
+    }
+    if(transXR2 >= 0.6){
+	transXR2 -= 0.2;
+	aux = 0;
+    }
+    if(transXR2 <= -4.0){
+	transXR2 += 0.2;
+	aux = 0;
+    } 
+    if(aux)
+	glutPostRedisplay();
+}
+
+void TimerFunction(int value){
+  printf("%f %f\n", transYR1+3.2, transBolaX+8);
+    if(((int)(transYR1+3.2) == (int)(transBolaX+8))  ||  ((int)(transYR2) == (int)(transBolaX-1))){
+	dirBola *= -1;
+	
+    }
+    if(!(transBolaX < -10 || transBolaX > 3)){
+	transBolaX += dirBola;
+	glutPostRedisplay();
+    }
+    glutTimerFunc(1000, TimerFunction, 1);    
+}
+
+int main(int argc, char **argv){
+   glutInit(&argc, argv);
+   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+   glutInitWindowSize (1000, 700);
+   glutInitWindowPosition (100, 100);
+   glutCreateWindow("Ping Pong");
+   glutDisplayFunc(Desenha);
+   glutKeyboardFunc(Key);
+   glutSpecialFunc(Special);
+   glutTimerFunc(1000, TimerFunction, 1);
+   Inicializa();
+   glutMainLoop();
+}

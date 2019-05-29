@@ -1,0 +1,51 @@
+/********************************3d Bowling ******************************/
+Files that are contained in the directory to be loaded by the program:
+
+cubo.wrl
+pinos.wrl
+fita.wrl
+bola.wrl
+cenario.wrl
+
+How to operate the program
+Keys:
+'q' to leave
+'e' disables lighting
+'w' enable lighting
+'r' resets the game
+'z', 'x', 'c', 's' rotate the camera 
+'1' restores the camera's initial position;
+
+Mouse:
+Single click with the left button launches the ball in the direction of the mouse.
+
+
+Known bugs:
+- The calculation of the collisions is not very precise, so for a few times pins that are not in the trajectory of the ball are knocked over.
+
+/********************************boliche 3d******************************/
+
+Arquivos contidos no diretorio a serem carregados pelo programa:
+
+cubo.wrl
+pinos.wrl
+fita.wrl
+bola.wrl
+cenario.wrl
+
+Como operar o programa
+
+Teclas:
+q            sair
+e            desabilita iluminação
+w            habilita iluminação
+r            reseta o jogo
+z,x,c,s      efetuam rotações na camera
+1	     restaura a posicão inicial da camera; 	
+
+Mouse:
+click unico com botao esquerdo efetua lancamento da bola na direção do mouse.
+
+
+Bugs conhecidos:
+-O calculo das colisões não esta muito preciso, por isso por algumas vezes são derrubados pinos que nao estão na trajetoria da bola.
